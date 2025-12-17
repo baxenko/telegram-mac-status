@@ -1,18 +1,17 @@
-# Telegram Mac Status Indicator
+# Telegram Mac Status Indicator 🟢
 
-A lightweight service that automatically updates your Telegram profile emoji based on your Mac's online status.
+A Python service that syncs your Mac's online/offline status with your Telegram profile emoji.
 
-- **Online (Active):** 🟢
-- **Offline (Sleep/Shutdown):** 🔴 (updates after 90 seconds of inactivity)
+- **Online:** Sets your Telegram status/name to 🟢.
+- **Offline:** Sets your Telegram status/name to 🔴 (after 90 seconds of inactivity).
 
-## How it works
+## Architecture
 
-1. **Mac (Client):** Sends a heartbeat (ping) request to the server every 60 seconds.
-2. **Server (Docker):** Listens for pings. If no ping is received for >90 seconds, it marks the status as offline and updates the Telegram profile via the API.
+1. **Client (macOS):** A background agent (`LaunchAgent`) sends a heartbeat to the server every minute.
+2. **Server (Python):** A Flask app listens for heartbeats and updates the Telegram account via Pyrogram.
 
-## Setup (Server)
+## 🛠 Server Setup
 
-1. Rename `.env.example` to `.env` and fill in your Telegram API credentials.
-2. Run with Docker Compose:
-   ```bash
-   docker-compose up -d
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
